@@ -23,36 +23,72 @@ if(edad >= edadMayor && edad <= edadLimite) {
     alert("No podes ingresar");
 }
 
-let conjunto = 2000;
-let pijama = 3000;
-let medias = 1000;
-let total = 0;
+const productosMagnolia = [
+    {
+        nombre: "Conjunto Andressa",
+        color: ["Rojo", "Negro", "Blanco"],
+        precio: 2000,
+    },
+    {
+        nombre: "Conjunto Kaury",
+        color: ["Rojo", "Negro", "Blanco"],
+        precio: 2300,
+    },
+    {
+        nombre: "Conjunto Sigry",
+        color: ["Rojo", "Negro", "Blanco"],
+        precio: 2500,
+    },
+    {
+        nombre: "Conjunto Lody",
+        color: ["Rojo", "Negro", "Blanco"],
+        precio: 3000,
+    },
+];
+
+let carrito = [];
+
+function agregarAlCarrito(producto, color) {
+    if (producto.color && color >= 1 && color <= producto.color.length) {
+        const colorElegido = producto.color[color - 1];
+        carrito.push({ ...producto, color: colorElegido });
+        alert(`Agregaste ${producto.nombre} (${colorElegido}) a tu carrito por $${producto.precio}`);
+    } else {
+        alert("Color no válido");
+    }
+}
+
+function mostrarCarrito() {
+    let carritoDetails = "Productos en el carrito:\n";
+    for (const producto of carrito) {
+        if (producto.color) {
+            carritoDetails += `- ${producto.nombre} (${producto.color}): $${producto.precio}\n`;
+        } else {
+            carritoDetails += `- ${producto.nombre}: $${producto.precio}\n`;
+        }
+    }
+    alert(carritoDetails);
+}
 
 function ingreso2() {
-    if (ingresar) {
-    let opcion = prompt("Elegí el número de la opción que quieras comprar:\n1- Conjunto-2000.\n2- Pijama-3000.\n3- Medias-1000.\nPresiona X para finalizar tu compra.");
+    let opcion = prompt("Elegí el número de la opción que quieras comprar:\n" + productosMagnolia.map((producto, index) => `${index + 1}- ${producto.nombre}-${producto.precio}`).join('\n') + "\nPresiona X para finalizar tu compra.");
     while (opcion !== "x" && opcion !== "X") {
-        switch (opcion) {
-            case "1":
-                total += conjunto;
-                alert("Agregaste $" + conjunto + " a tu carrito");
-                break;
-            case "2":
-                total += pijama;
-                alert("Agregaste $" + pijama + " a tu carrito");
-                break;
-            case "3":
-                total += medias;
-                alert("Agregaste $" + medias + " a tu carrito");
-                break;
-            default:
-                alert("Opción no válida");
-                break;
-            }
-            opcion = prompt("Elegí el número de la opción que quieras comprar:\n1- Conjunto-2000.\n2- Pijama-3000.\n3- Medias-1000.\nPresiona X para finalizar tu compra.");
+        const opcionNum = parseInt(opcion);
+        if (opcionNum >= 1 && opcionNum <= productosMagnolia.length) {
+            const producto = productosMagnolia[opcionNum - 1];
+            let color = prompt(`Elige el color para el ${producto.nombre}:\n${producto.color.map((color, index) => `${index + 1}- ${color}`).join('\n')}`);
+            agregarAlCarrito(producto, parseInt(color));
+        } else {
+            alert("Opción no válida");
         }
-        alert("El total de tu compra es: $" + total);
+        opcion = prompt("Elegí el número de la opción que quieras comprar:\n" + productosMagnolia.map((producto, index) => `${index + 1}- ${producto.nombre}-${producto.precio}`).join('\n') + "\nPresiona X para finalizar tu compra.");
     }
-alert("Te enviaremos un mail con los pasos a seguir para terminar tu compra. Gracias!!!")
+    let total = 0;
+    for (const producto of carrito) {
+        total += producto.precio;
+    }
+    alert("El total de tu compra es: $" + total);
+    mostrarCarrito();
+    alert("Te enviaremos un mail con los pasos a seguir para terminar tu compra. ¡Gracias!");
 }
 ingreso2();

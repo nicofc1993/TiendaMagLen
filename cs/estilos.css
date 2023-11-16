@@ -1,5 +1,7 @@
 body {
     margin: 0px;
+    background-image: url(../imagenes/Fondo.png);
+    background-repeat: repeat;
 }
 .nav-container{
     position: sticky;
@@ -10,8 +12,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
+    height: 150px;
     background-color: #ffc2d1;
+    background-image: url(../imagenes/Logomagnolia.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
 }
 .navmag-logo{
     margin-left: 20px;

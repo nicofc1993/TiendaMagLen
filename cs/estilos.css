@@ -35,13 +35,14 @@ body {
     margin-right: 80px;
 }
 .card{
-    max-width: 300px;
+    width: 280px;
     margin: auto;
     text-align: center;
 }
 .card img{
-    width: 100%;
+    width: 200px;
     height: 250px;
+    align-self: center;
 }
 
 .modal-container{

@@ -66,6 +66,17 @@ productosMagnolia.forEach((productos) => {
             nombre : productos.nombre,
             precio : productos.precio,
         });
+        Toastify({
+            text: 'Tu elemento se agregó al carrito',
+            duration: 2000,
+            close: true,
+            gravity: 'bottom',
+            style: {
+                background: "linear-gradient(to right, #ffc2d1, #ffe5ec)",
+                color: "#023e8a",
+            },
+        }).showToast();
+
     console.log(carrito);
     });
 });

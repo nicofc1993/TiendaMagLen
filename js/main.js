@@ -81,8 +81,7 @@ productosMagnolia.forEach((productos) => {
     });
 });
 
-verCarrito.addEventListener("click", () =>{
-    
+verCarrito.addEventListener("click", () => {
     const modalHeader = document.createElement("div");
     modalHeader.className = "modal-header"
     modalHeader.innerHTML = `
@@ -101,17 +100,30 @@ verCarrito.addEventListener("click", () =>{
     })
 
     modalHeader.append(modalbutton);
-    
-    carrito.forEach((productos) => {
-    let carritoContent = document.createElement("div");
-    carritoContent.className = "modal-content"
-    carritoContent.innerHTML = `
-        <img src="${productos.img}">
-        <h3>${productos.nombre}</h3>
-        <p>$${productos.precio}<p>
-    `;
 
-    modalContainer.append(carritoContent)
+    carrito.forEach((productos, index) => {
+        let carritoContent = document.createElement("div");
+        carritoContent.className = "modal-content"
+        carritoContent.innerHTML = `
+            <img src="${productos.img}">
+            <h3>${productos.nombre}</h3>
+            <p>$${productos.precio}<p>
+            <button class="borrar-btn" data-index="${index}">Borrar</button>
+        `;
+
+        modalContainer.append(carritoContent);
+
+        const btnBorrar = carritoContent.querySelector(".borrar-btn");
+        btnBorrar.addEventListener("click", () => {
+            const indexToDelete = parseInt(btnBorrar.getAttribute("data-index"));
+
+            carrito.splice(indexToDelete, 1);
+
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+
+            modalContainer.innerHTML = "";
+            verCarrito.click();
+        });
     });
 
     const total = carrito.reduce((acc, el) => acc + el.precio, 0);
@@ -120,4 +132,24 @@ verCarrito.addEventListener("click", () =>{
     totalBuying.className = "total-content"
     totalBuying.innerHTML = `Total a pagar: $${total}`;
     modalContainer.append(totalBuying);
+
+    const realizarCompraBtn = document.createElement("button");
+    realizarCompraBtn.innerText = "Realizar compra";
+    realizarCompraBtn.className = "realizar-compra-btn";
+    modalContainer.append(realizarCompraBtn);
+
+    realizarCompraBtn.addEventListener("click", () => {
+        carrito = [];
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        
+        window.alert('¡Compra realizada con éxito!');
+        modalContainer.style.display = "none";
+    
+        location.reload();
+    });
+    
+    modalbutton.addEventListener("click", () => {
+        modalContainer.style.display = "none";
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+});
 });

@@ -41,6 +41,14 @@ const productosMagnolia = [
     }
 ];
 
+const jsonString = JSON.stringify(productosMagnolia);
+
+console.log(jsonString);
+console.log(typeof productosMagnolia);
+console.log(typeof jsonString);
+
+localStorage.setItem("productosMagnolia", jsonString);
+
 let carrito = [];
 
 productosMagnolia.forEach((productos) => {
@@ -153,3 +161,11 @@ verCarrito.addEventListener("click", () => {
         localStorage.setItem("carrito", JSON.stringify(carrito));
 });
 });
+
+fetch("productos.json")
+    .then((response) =>{
+        return response.json();
+    })
+    .then((responseJson) =>{
+        console.log(responseJson);
+    })
